@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark-first design system */
+    --background: 222 28% 7%;
+    --foreground: 213 31% 91%;
+    --card: 222 25% 10%;
+    --card-foreground: 213 31% 91%;
+    --popover: 222 25% 10%;
+    --popover-foreground: 213 31% 91%;
+    --primary: 252 87% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 20% 15%;
+    --secondary-foreground: 213 31% 80%;
+    --muted: 222 20% 14%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 252 60% 20%;
+    --accent-foreground: 252 87% 80%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 20% 18%;
+    --input: 222 20% 14%;
+    --ring: 252 87% 67%;
+    --radius: 0.75rem;
+
+    /* Glow colors */
+    --glow-primary: 252 87% 67%;
+    --glow-teal: 174 84% 52%;
+    --glow-purple: 280 87% 65%;
+
+    /* Sidebar */
+    --sidebar-w: 260px;
+    --sidebar-bg: 222 28% 6%;
+    --sidebar-border: 222 20% 12%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsla(252,87%,67%,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, hsla(174,84%,52%,0.07) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Thin scrollbar */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); }
+}
+
+@layer utilities {
+  /* Glass morphism surface */
+  .glass {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .glass-sidebar {
+    background: hsl(var(--sidebar-bg) / 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid hsl(var(--sidebar-border));
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsla(252, 87%, 67%, 0.35), 0 0 40px hsla(252, 87%, 67%, 0.12);
+  }
+  .glow-sm {
+    box-shadow: 0 0 12px hsla(252, 87%, 67%, 0.25);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(280,87%,70%) 50%, hsl(174,84%,60%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle gradient border */
+  .gradient-border {
+    position: relative;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: calc(var(--radius) + 1px);
+    background: linear-gradient(135deg, hsla(252,87%,67%,0.4), hsla(174,84%,52%,0.2), hsla(280,87%,65%,0.3));
+    z-index: -1;
+  }
+
+  /* Mesh grid background */
+  .mesh-bg {
+    background-image:
+      linear-gradient(hsl(var(--border)/0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border)/0.4) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Stat card accent bar */
+  .card-accent-top::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(280,87%,70%));
+  }
+
+  /* Shine animation on hover */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.07) 50%, transparent 80%);
+    transform: skewX(-15deg);
+    transition: left 0.5s ease;
+  }
+  .shine:hover::after { left: 120%; }
+}
